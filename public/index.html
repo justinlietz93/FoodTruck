@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Truck Website</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/site.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Techie's Taco Truck</h1>
+        <p>The legendary traveling food merchant</p>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./menu.html">Menu</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Events</h2>
+        <div class="event" onclick="toggleEventInfo('event1')">
+            Spring Smash
+        </div>
+        <div id="event1" class="event-details">
+            <h3>Don't miss us!</h3>
+            <p>Location: Location 1</p>
+            <p>Date: Date 1</p>
+            <p>Hours: Hours 1</p>
+        </div>
+
+        <div class="event" onclick="toggleEventInfo('event2')">
+            Summer Slam
+        </div>
+        <div id="event2" class="event-details">
+            <h3>Show up for our summer menu!</h3>
+            <p>Location: Location 2</p>
+            <p>Date: Date 2</p>
+            <p>Hours: Hours 2</p>
+        </div>
+        <!-- Add more events and details as needed -->
+    </div>
+</body>
+</html>

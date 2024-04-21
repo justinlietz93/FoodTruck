@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Food Truck</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <script src="scripts/site.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./menu.html">Menu</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Manage Menu Items</h2>
+        <form action="#" method="post">
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name" required>
+            <label for="item_description">Description:</label>
+            <textarea id="item_description" name="item_description" rows="4" required></textarea>
+            <label for="item_price">Price:</label>
+            <input type="text" id="item_price" name="item_price" required>
+            <button type="submit">Add Item</button>
+        </form>
+
+        <h2>Manage Events</h2>
+        <form action="#" method="post">
+            <label for="event_name">Event Name:</label>
+            <input type="text" id="event_name" name="event_name" required>
+            <label for="event_location">Location:</label>
+            <input type="text" id="event_location" name="event_location" required>
+            <label for="event_date">Date:</label>
+            <input type="date" id="event_date" name="event_date" required>
+            <label for="event_hours">Hours:</label>
+            <input type="text" id="event_hours" name="event_hours" required>
+            <button type="submit">Add Event</button>
+        </form>
+    </div>
+</body>
+</html>

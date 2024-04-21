@@ -1,0 +1,76 @@
+##################################    ENDPOINTS TESTING    ##################################
+
+### Variables
+@url = http://localhost:3000
+
+
+
+##################################    MENU    ##################################
+
+### Get menu                        (id, name, description, price)
+GET {{url}}/api/v1/menu
+
+
+### Create a menu item                       (name, description, price)
+POST {{url}}/api/v1/menu
+Content-Type: application/json
+
+{
+ "name": "Super burrito",
+ "description": "Super burrito",
+ "price": "10" 
+}
+
+
+### PUT /api/menu/:id                    (name, description, price)
+PUT {{url}}/api/v1/menu/66247bf96da6d48887319a7f
+Content-Type: application/json
+
+{
+    "name": "Ultraaa burrito",
+    "description": "Super burrito",
+    "price": "10" 
+}
+
+
+### DELETE /api/v1/menu/:id 
+DELETE {{url}}/api/v1/menu/66247d4e593bb13e0ff555d6
+
+
+##################################    EVENTS    ##################################
+
+### GET /api/v1/events                      (id, name)
+GET {{url}}/api/v1/events
+
+
+### GET /api/v1/events/:id                  (name, location, date, hours)
+GET {{url}}/api/v1/events/66248016593bb13e0ff555d8
+
+
+### POST /api/v1/events                     (name, location, dates, hours)
+POST {{url}}/api/v1/events/
+Content-Type: application/json
+
+{
+    "name": "Fall Fiesta",
+    "location": "FVTC",
+    "dates": "2021-10-10",
+    "hours": "10:00 - 3:00" 
+}
+
+
+### PUT /api/v1/events/:id                  (name, location, dates, hours)
+PUT {{url}}/api/v1/events/66248016593bb13e0ff555d8
+Content-Type: application/json
+
+{
+    "name": "Summer Fiesta",
+    "location": "FVTC",
+    "dates": "2021-10-10",
+    "hours": "10:00 - 3:00" 
+}
+
+
+### DELETE /api/v1/events/:id
+DELETE {{url}}/api/v1/events/662489ba74c34a7362ab4267
+
