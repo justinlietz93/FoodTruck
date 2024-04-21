@@ -140,6 +140,7 @@ nav ul li a:hover {
     background-color: #ff893a;
     opacity: 0;
     animation: fadeIn 0.7s forwards;
+    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease;
 }
 
 @keyframes fadeIn {
