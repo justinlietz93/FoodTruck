@@ -16,9 +16,9 @@ POST {{url}}/api/v1/menu
 Content-Type: application/json
 
 {
- "name": "Super burrito",
- "description": "Super burrito",
- "price": "10" 
+ "name": "Cantina Salad Bowl",
+ "description": "Romaine lettuce, black beans, pico de gallo, guacamole, and sour cream",
+ "price": "3.50" 
 }
 
 
@@ -27,9 +27,9 @@ PUT {{url}}/api/v1/menu/66247bf96da6d48887319a7f
 Content-Type: application/json
 
 {
-    "name": "Ultraaa burrito",
-    "description": "Super burrito",
-    "price": "10" 
+    "name": "Tasty Taco",
+    "description": "Crunch hardshell taco with beef, lettuce, cheese, and sour cream",
+    "price": "2" 
 }
 
 

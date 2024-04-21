@@ -1,45 +1,58 @@
 /* Specific styles for admin page */
 
+th.Actions {
+    text-align: center;
+}
+
+th.Actions button {
+    margin: auto;
+}
+
 .container {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-top: 20px;
+    padding: 20px;
 }
 
 .container h2 {
     color: #333;
 }
 
-.container form {
+.container table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.container form label {
-    display: block;
-    margin-bottom: 5px;
+.container table th,
+.container table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
-.container form input[type="text"],
-.container form input[type="email"],
-.container form input[type="date"],
-.container form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.container table th {
+    background-color: #f2f2f2;
 }
 
-.container form button {
+.container table td button {
     background-color: #ff6600;
     color: #fff;
-    padding: 10px 20px;
+    padding: 6px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    
 }
 
-.container form button:hover {
-    background-color: #e65c00;
+.container table td button:hover {
+    background-color: #4091d7;
+
+}
+
+#add_button {
+    width: 130px;
 }
