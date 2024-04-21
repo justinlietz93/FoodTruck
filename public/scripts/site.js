@@ -9,7 +9,6 @@
     const getMenu = async () => {
         const menu = await fetch('/api/v1/menu')
         const menuData = await menu.json()
-        console.log(menuData)
 
         return await menuData
     }
@@ -17,20 +16,26 @@
     const getMenuItem = async (id) => {
         const menu = await fetch(`/api/v1/menu/${id}`)
         const menuData = await menu.json()
-        console.log(menuData)
 
         return await menuData
     }
     
-    const updateMenu = async (id) => {
-        const response = await fetch(`/api/v1/menu/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }})
-
-        return await response.json()
+    const updateMenuItem = async (id, menuData) => {
+        try {
+            const response = await fetch(`/api/v1/menu/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(menuData)
+            });
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error('Error updating menu:', error);
         }
+    }
+
     
     const deleteMenuItem = async (id) => {
         const response = await fetch(`/api/v1/menu/${id}`, {
@@ -42,20 +47,66 @@
         return await response.json()
     }
 
-    const addMenuItem = async () => {
-        const menu = await fetch('/api/v1/menu', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }})
-
-        const menuData = await menu.json()
-
-        return await menuData
+    const addMenuItem = async (menuData) => {
+        try {
+            const items = await fetch('/api/v1/menu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(menuData)
+            })
+            const responseData = await items.json()
+    
+            return responseData
+        } catch (error) {
+            console.error('Error adding event:', error)
+        }
     }
 
+    const handleAddMenuItem = async () => {
+        const newName = document.getElementById('new-item-name').value
+        const newDescription = document.getElementById('new-item-description').value
+        const newPrice = document.getElementById('new-item-price').value
+    
+        const menuItemData = {
+            name: newName,
+            description: newDescription,
+            price: newPrice
+        }
+    
+        try {
+            await addMenuItem(menuItemData)
+            window.location.reload()
+            
+        } catch (error) {
+            console.error('Error adding menu item:', error)
+        }
+    }
 
     /////////////////////////////      EVENTS        //////////////////////////////
+
+    const handleAddEvent = async () => {
+        const newName = document.getElementById('new-event-name').value
+        const newLocation = document.getElementById('new-event-location').value
+        const newDate = document.getElementById('new-event-date').value
+        const newHours = document.getElementById('new-event-hours').value
+    
+        const eventData = {
+            name: newName,
+            location: newLocation,
+            dates: newDate,
+            hours: newHours
+        }
+    
+        try {
+            await addEvent(eventData)
+            window.location.reload()
+
+        } catch (error) {
+            console.error('Error adding event:', error)
+        }
+    }
 
     const addEvent = async (eventData) => {
         try {
@@ -77,7 +128,6 @@
     const getEvents = async () => {
         const events = await fetch('/api/v1/events')
         const eventData = await events.json()
-        console.log(eventData)
 
         return await eventData
     }
@@ -85,19 +135,24 @@
     const getEvent = async (id) => {
         const event = await fetch(`/api/v1/events/${id}`)
         const eventData = await event.json()
-        console.log(eventData)
 
         return await eventData
     }
 
-    const updateEvent = async (id) => {
-        const response = await fetch(`/api/v1/events/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }})
-
-        return await response.json()
+    const updateEvent = async (id, eventData) => {
+        try {
+            const response = await fetch(`/api/v1/events/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+            });
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error('Error updating event:', error);
+        }
     }
 
     const deleteEvent = async (id) => {
@@ -108,6 +163,7 @@
             }})
 
         return await response.json()
+        
     }
 
     /////////////////////////////      SITE FUNCTIONALITY        //////////////////////////////
@@ -117,21 +173,19 @@
     const displayMenu = async () => {
         try {
             const menu = await getMenu()
-            const container = document.getElementById('menu-container') // Get the menu container element
-    
-            container.innerHTML = '' // Clear existing menu items
+            const container = document.getElementById('menu-container')
     
             menu.forEach(item => {
-                const menuItemDiv = document.createElement('div') // Create a div for each menu item
+                const menuItemDiv = document.createElement('div')
                 menuItemDiv.classList.add('menu-item')
     
-                const itemName = document.createElement('h2') // Create heading element for item name
+                const itemName = document.createElement('h2')
                 itemName.textContent = item.name
     
-                const itemDescription = document.createElement('p') // Create paragraph element for item description
+                const itemDescription = document.createElement('p')
                 itemDescription.textContent = item.description
     
-                const itemPrice = document.createElement('p') // Create paragraph element for item price
+                const itemPrice = document.createElement('p')
                 itemPrice.textContent = `Price: $${item.price}`
     
                 // Append name, description, and price elements to the menu item div
@@ -139,14 +193,14 @@
                 menuItemDiv.appendChild(itemDescription)
                 menuItemDiv.appendChild(itemPrice)
     
-                container.appendChild(menuItemDiv) // Append the menu item div to the container
+                container.appendChild(menuItemDiv)
             })
         } catch (error) {
             console.error('Error fetching menu items:', error)
         }
     }
 
-    displayMenu()
+    await displayMenu()
 
     /////////////////////////////      EVENTS        //////////////////////////////
     
@@ -159,8 +213,7 @@
         const eventsContainer = document.getElementById('events-container')
     
         try {
-            const eventsResponse = await fetch('/api/v1/events')
-            const eventsData = await eventsResponse.json()
+            const eventsData = await getEvents()
     
             eventsData.forEach((event, index) => {
                 const eventCard = document.createElement('div')
@@ -185,7 +238,7 @@
         }
     }
     
-    displayEvents()
+    await displayEvents()
 
     /////////////////////////////      ADMIN FUNCTIONALITY        //////////////////////////////
 
@@ -196,8 +249,6 @@
             const menu = await getMenu()
             const menuTableBody = document.querySelector('#menu-table tbody')
     
-            menuTableBody.innerHTML = '' // Clear existing menu items
-    
             menu.forEach(item => {
                 const row = document.createElement('tr')
                 row.innerHTML = `
@@ -205,13 +256,36 @@
                     <td><input type="text" value="${item.description}"></td>
                     <td><input type="text" value="${item.price}"></td>
                     <td>
-                        <button onclick="await updateMenu(${item.id})">Update</button>
-                        <button onclick="await deleteMenuItem(${item.id})">Delete</button>
+                        <button id="update-button-${item._id}">Update</button>
+                        <button id="delete-button-${item._id}">Delete</button>
                     </td>
                 `
-                menuTableBody.appendChild(row)
+            menuTableBody.appendChild(row)
+
+            const updateButton = row.querySelector(`#update-button-${item._id}`)
+            updateButton.addEventListener('click', async () => {
+                const updatedName = row.querySelector('td:nth-child(1) input').value
+                const updatedDescription = row.querySelector('td:nth-child(2) input').value
+                const updatedPrice = row.querySelector('td:nth-child(3) input').value
+
+                const updatedMenuItemData = {
+                    name: updatedName,
+                    description: updatedDescription,
+                    price: updatedPrice
+                }
+
+                await updateMenuItem(item._id, updatedMenuItemData)
+                window.location.reload()
             })
-    
+
+            const deleteButton = row.querySelector(`#delete-button-${item._id}`)
+            deleteButton.addEventListener('click', async () => {
+                await deleteMenuItem(item._id)
+                window.location.reload()
+            })
+      
+            })
+
             // Add input sections for the last row
             const newRow = document.createElement('tr')
             newRow.innerHTML = `
@@ -219,16 +293,21 @@
                 <td><input type="text" id="new-item-description"></td>
                 <td><input type="text" id="new-item-price"></td>
                 <td>
-                    <button id="add_button" onclick="addItem()">Add</button>
+                    <button id="add_button">Add</button>
                 </td>
             `
             menuTableBody.appendChild(newRow)
+    
+            // Attach event listener to the add button
+            const addButton = newRow.querySelector('#add_button')
+            addButton.addEventListener('click', handleAddMenuItem)
+        
         } catch (error) {
             console.error('Error fetching menu items:', error)
         }
     }
     
-    displayAdminMenu()
+    await displayAdminMenu()
 
     /////////////////////////////      EVENTS        //////////////////////////////
 
@@ -236,8 +315,6 @@
         try {
             const events = await getEvents()
             const eventsTableBody = document.querySelector('#event-table tbody')
-    
-            eventsTableBody.innerHTML = '' // Clear existing events
     
             events.forEach(event => {
                 const row = document.createElement('tr')
@@ -247,18 +324,35 @@
                     <td><input type="text" value="${event.dates}"></td>
                     <td><input type="text" value="${event.hours}"></td>
                     <td>
-                        <button id="update-button-${event.id}">Update</button>
-                        <button id="delete-button-${event.id}">Delete</button>
+                        <button id="update-button-${event._id}">Update</button>
+                        <button id="delete-button-${event._id}">Delete</button>
                     </td>
                 `
                 eventsTableBody.appendChild(row)
+                
+                const updateButton = row.querySelector(`#update-button-${event._id}`)
+                updateButton.addEventListener('click', async () => {
+                    const updatedName = row.querySelector('td:nth-child(1) input').value;
+                    const updatedLocation = row.querySelector('td:nth-child(2) input').value;
+                    const updatedDate = row.querySelector('td:nth-child(3) input').value;
+                    const updatedHours = row.querySelector('td:nth-child(4) input').value;
     
-                // Attach event listeners to the buttons
-                const updateButton = row.querySelector(`#update-button-${event.id}`)
-                updateButton.addEventListener('click', () => updateEvent(event.id))
+                    const updatedEventData = {
+                        name: updatedName,
+                        location: updatedLocation,
+                        dates: updatedDate,
+                        hours: updatedHours
+                    }
     
-                const deleteButton = row.querySelector(`#delete-button-${event.id}`)
-                deleteButton.addEventListener('click', () => deleteEvent(event.id))
+                    await updateEvent(event._id, updatedEventData)
+                    window.location.reload()
+                })
+
+                const deleteButton = row.querySelector(`#delete-button-${event._id}`)
+                deleteButton.addEventListener('click', async () => {
+                    await deleteEvent(event._id)
+                    window.location.reload()
+                })
             })
     
             // Add input sections for the last row
@@ -276,26 +370,12 @@
     
             // Attach event listener to the add button
             const addButton = newRow.querySelector('#add_button')
-            addButton.addEventListener('click', async () => {
-                const newName = document.getElementById('new-event-name').value
-                const newLocation = document.getElementById('new-event-location').value
-                const newDate = document.getElementById('new-event-date').value
-                const newHours = document.getElementById('new-event-hours').value
-
-                const eventData = {
-                    name: newName,
-                    location: newLocation,
-                    dates: newDate,
-                    hours: newHours
-                }
-
-            await addEvent(eventData)
-            })
+            addButton.addEventListener('click', handleAddEvent)
         } catch (error) {
             console.error('Error fetching events:', error)
         }
     }
 
-    displayAdminEvents()
+    await displayAdminEvents()
 
 })()
