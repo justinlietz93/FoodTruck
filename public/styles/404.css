@@ -4,7 +4,14 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #ffe6d1;
+    background-image: url('../img/little-tacos.jpg');
+}
+
+span {
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: black 1px solid;
 }
 
 .error {

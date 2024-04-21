@@ -6,6 +6,7 @@
 
     /////////////////////////////      MENU        //////////////////////////////
 
+    // Fetches menu items from the database
     const getMenu = async () => {
         const menu = await fetch('/api/v1/menu')
         const menuData = await menu.json()
@@ -13,6 +14,7 @@
         return await menuData
     }
     
+    // Updates a menu item in the database
     const updateMenuItem = async (id, menuData) => {
         try {
             const response = await fetch(`/api/v1/menu/${id}`, {
@@ -29,7 +31,7 @@
         }
     }
 
-    
+    // Deletes a menu item from the database
     const deleteMenuItem = async (id) => {
         const response = await fetch(`/api/v1/menu/${id}`, {
             method: 'DELETE',
@@ -40,6 +42,7 @@
         return await response.json()
     }
 
+    // Adds a menu item to the database
     const addMenuItem = async (menuData) => {
         try {
             const items = await fetch('/api/v1/menu', {
@@ -57,6 +60,7 @@
         }
     }
 
+    // Handles add menu item data handoff from the form to the add menu item function (probably can be done better)
     const handleAddMenuItem = async () => {
         const newName = document.getElementById('new-item-name').value
         const newDescription = document.getElementById('new-item-description').value
@@ -79,6 +83,7 @@
 
     /////////////////////////////      EVENTS        //////////////////////////////
 
+    // Handles add event data handoff from the form to the add event function (probably can be done better)
     const handleAddEvent = async () => {
         const newName = document.getElementById('new-event-name').value
         const newLocation = document.getElementById('new-event-location').value
@@ -101,6 +106,7 @@
         }
     }
 
+    // Adds an event to the database
     const addEvent = async (eventData) => {
         try {
             const events = await fetch('/api/v1/events', {
@@ -118,6 +124,7 @@
         }
     }
 
+    // Fetches events from the database
     const getEvents = async () => {
         const events = await fetch('/api/v1/events')
         const eventData = await events.json()
@@ -125,6 +132,7 @@
         return await eventData
     }
 
+    // Updates an event in the database
     const updateEvent = async (id, eventData) => {
         try {
             const response = await fetch(`/api/v1/events/${id}`, {
@@ -141,6 +149,7 @@
         }
     }
 
+    // Deletes an event from the database
     const deleteEvent = async (id) => {
         const response = await fetch(`/api/v1/events/${id}`, {
             method: 'DELETE',
@@ -193,14 +202,17 @@
 
     /////////////////////////////      EVENTS        //////////////////////////////
     
+    // Toggles event details visibility, when clicked the card becomes visible
     const toggleEventInfo = (eventId) => {
         const eventDetails = document.getElementById(eventId)
         eventDetails.classList.toggle('hidden')
     }
     
+    // Displays events on the site (home page)
     const displayEvents = async () => {
         const eventsContainer = document.getElementById('events-container')
     
+        // Fetches events data and sorts by date
         try {
             const eventsData = await getEvents()
     
@@ -240,6 +252,7 @@
             const menu = await getMenu()
             const menuTableBody = document.querySelector('#menu-table tbody')
     
+            // Populates rows with input fields containing menu item data
             menu.forEach(item => {
                 const row = document.createElement('tr')
                 row.innerHTML = `
@@ -253,23 +266,28 @@
                 `
             menuTableBody.appendChild(row)
 
+            // Event listener for updating menu item data
             const updateButton = row.querySelector(`#update-button-${item._id}`)
             updateButton.addEventListener('click', async () => {
                 const updatedName = row.querySelector('td:nth-child(1) input').value
                 const updatedDescription = row.querySelector('td:nth-child(2) input').value
                 const updatedPrice = row.querySelector('td:nth-child(3) input').value
 
+                // Assembles menu item data to be updated
                 const updatedMenuItemData = {
                     name: updatedName,
                     description: updatedDescription,
                     price: updatedPrice
                 }
 
+                // Updates menu item data
                 await updateMenuItem(item._id, updatedMenuItemData)
+                // Used to refresh the page after updating
                 window.location.reload()
             })
 
             const deleteButton = row.querySelector(`#delete-button-${item._id}`)
+            // Event listener for deleting menu item
             deleteButton.addEventListener('click', async () => {
                 await deleteMenuItem(item._id)
                 window.location.reload()
@@ -302,13 +320,15 @@
 
     /////////////////////////////      EVENTS        //////////////////////////////
 
+    // Displays events in the admin panel for updating, adding, and deleting
     const displayAdminEvents = async () => {
         try {
             const events = await getEvents()
             const eventsTableBody = document.querySelector('#event-table tbody')
 
             events.sort((a, b) => new Date(a.dates) - new Date(b.dates))
-    
+            
+            // Populates row with input fields containing event data
             events.forEach(event => {
                 const row = document.createElement('tr')
                 row.innerHTML = `
@@ -324,12 +344,15 @@
                 eventsTableBody.appendChild(row)
                 
                 const updateButton = row.querySelector(`#update-button-${event._id}`)
+
+                // Event listener for updating event data
                 updateButton.addEventListener('click', async () => {
                     const updatedName = row.querySelector('td:nth-child(1) input').value
                     const updatedLocation = row.querySelector('td:nth-child(2) input').value
                     const updatedDate = row.querySelector('td:nth-child(3) input').value
                     const updatedHours = row.querySelector('td:nth-child(4) input').value
     
+                    // Assembles event data to be updated
                     const updatedEventData = {
                         name: updatedName,
                         location: updatedLocation,
@@ -337,7 +360,9 @@
                         hours: updatedHours
                     }
     
+                    // Updates event data
                     await updateEvent(event._id, updatedEventData)
+                    // Used to refresh the page after updating
                     window.location.reload()
                 })
 
@@ -374,10 +399,12 @@
 
     /////////////////////////////      DYNAMIC SITE BEHAVIOR        //////////////////////////////
 
+    // Global nav bar behavior
     window.addEventListener('scroll', () => {
         const header = document.querySelector('header')
         const nav = document.querySelector('nav')
     
+        // When the user scrolls past the header, the nav bar becomes fixed to the top of the page
         if (window.scrollY > header.offsetHeight - 100) {
             nav.style.position = 'fixed'
             nav.style.top = '0'
