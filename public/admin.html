@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/admin.css">
     <script src="scripts/site.js" defer></script>
+    <script src="scripts/admin.js" defer></script> <!-- Add admin JavaScript file -->
 </head>
 <body>
     <header>
@@ -22,28 +23,35 @@
 
     <div class="container">
         <h2>Manage Menu Items</h2>
-        <form action="#" method="post">
-            <label for="item_name">Item Name:</label>
-            <input type="text" id="item_name" name="item_name" required>
-            <label for="item_description">Description:</label>
-            <textarea id="item_description" name="item_description" rows="4" required></textarea>
-            <label for="item_price">Price:</label>
-            <input type="text" id="item_price" name="item_price" required>
-            <button type="submit">Add Item</button>
-        </form>
+        <table id="menu-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Menu items will be dynamically added here -->
+            </tbody>
+        </table>
 
         <h2>Manage Events</h2>
-        <form action="#" method="post">
-            <label for="event_name">Event Name:</label>
-            <input type="text" id="event_name" name="event_name" required>
-            <label for="event_location">Location:</label>
-            <input type="text" id="event_location" name="event_location" required>
-            <label for="event_date">Date:</label>
-            <input type="date" id="event_date" name="event_date" required>
-            <label for="event_hours">Hours:</label>
-            <input type="text" id="event_hours" name="event_hours" required>
-            <button type="submit">Add Event</button>
-        </form>
+        <table id="event-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Events will be dynamically added here -->
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

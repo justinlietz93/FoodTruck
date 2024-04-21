@@ -39,7 +39,7 @@ nav ul li a:hover {
 
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -56,5 +56,21 @@ nav ul li a:hover {
 }
 
 .event-details {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.event-details p {
+    margin: 5px;
+}
+
+.event-details p strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.hidden {
     display: none;
 }
