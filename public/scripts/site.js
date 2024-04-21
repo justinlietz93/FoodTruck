@@ -12,13 +12,6 @@
 
         return await menuData
     }
-
-    const getMenuItem = async (id) => {
-        const menu = await fetch(`/api/v1/menu/${id}`)
-        const menuData = await menu.json()
-
-        return await menuData
-    }
     
     const updateMenuItem = async (id, menuData) => {
         try {
@@ -28,11 +21,11 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(menuData)
-            });
-            const responseData = await response.json();
-            return responseData;
+            })
+            const responseData = await response.json()
+            return responseData
         } catch (error) {
-            console.error('Error updating menu:', error);
+            console.error('Error updating menu:', error)
         }
     }
 
@@ -132,13 +125,6 @@
         return await eventData
     }
 
-    const getEvent = async (id) => {
-        const event = await fetch(`/api/v1/events/${id}`)
-        const eventData = await event.json()
-
-        return await eventData
-    }
-
     const updateEvent = async (id, eventData) => {
         try {
             const response = await fetch(`/api/v1/events/${id}`, {
@@ -147,11 +133,11 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(eventData)
-            });
-            const responseData = await response.json();
-            return responseData;
+            })
+            const responseData = await response.json()
+            return responseData
         } catch (error) {
-            console.error('Error updating event:', error);
+            console.error('Error updating event:', error)
         }
     }
 
@@ -176,10 +162,12 @@
             const container = document.getElementById('menu-container')
     
             menu.forEach(item => {
-                const menuItemDiv = document.createElement('div')
-                menuItemDiv.classList.add('menu-item')
+                // Create a div to hold each menu item
+                const menuItemCard = document.createElement('div')
+                menuItemCard.classList.add('menu-item-card')
     
-                const itemName = document.createElement('h2')
+                // Create elements for name, description, and price
+                const itemName = document.createElement('h1')
                 itemName.textContent = item.name
     
                 const itemDescription = document.createElement('p')
@@ -188,12 +176,13 @@
                 const itemPrice = document.createElement('p')
                 itemPrice.textContent = `Price: $${item.price}`
     
-                // Append name, description, and price elements to the menu item div
-                menuItemDiv.appendChild(itemName)
-                menuItemDiv.appendChild(itemDescription)
-                menuItemDiv.appendChild(itemPrice)
+                // Append name, description, and price elements to the menu item card
+                menuItemCard.appendChild(itemName)
+                menuItemCard.appendChild(itemDescription)
+                menuItemCard.appendChild(itemPrice)
     
-                container.appendChild(menuItemDiv)
+                // Append the menu item card to the container
+                container.appendChild(menuItemCard)
             })
         } catch (error) {
             console.error('Error fetching menu items:', error)
@@ -215,6 +204,8 @@
         try {
             const eventsData = await getEvents()
     
+            eventsData.sort((a, b) => new Date(a.dates) - new Date(b.dates))
+
             eventsData.forEach((event, index) => {
                 const eventCard = document.createElement('div')
                 eventCard.classList.add('event')
@@ -315,6 +306,8 @@
         try {
             const events = await getEvents()
             const eventsTableBody = document.querySelector('#event-table tbody')
+
+            events.sort((a, b) => new Date(a.dates) - new Date(b.dates))
     
             events.forEach(event => {
                 const row = document.createElement('tr')
@@ -332,10 +325,10 @@
                 
                 const updateButton = row.querySelector(`#update-button-${event._id}`)
                 updateButton.addEventListener('click', async () => {
-                    const updatedName = row.querySelector('td:nth-child(1) input').value;
-                    const updatedLocation = row.querySelector('td:nth-child(2) input').value;
-                    const updatedDate = row.querySelector('td:nth-child(3) input').value;
-                    const updatedHours = row.querySelector('td:nth-child(4) input').value;
+                    const updatedName = row.querySelector('td:nth-child(1) input').value
+                    const updatedLocation = row.querySelector('td:nth-child(2) input').value
+                    const updatedDate = row.querySelector('td:nth-child(3) input').value
+                    const updatedHours = row.querySelector('td:nth-child(4) input').value
     
                     const updatedEventData = {
                         name: updatedName,
@@ -377,5 +370,31 @@
     }
 
     await displayAdminEvents()
+    
+
+    /////////////////////////////      DYNAMIC SITE BEHAVIOR        //////////////////////////////
+
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header')
+        const nav = document.querySelector('nav')
+    
+        if (window.scrollY > header.offsetHeight - 100) {
+            nav.style.position = 'fixed'
+            nav.style.top = '0'
+            nav.style.width = '90%'
+            nav.style.transition = 'margin-top 0.3s ease'
+            nav.style.margin = '0 5%'
+            nav.style.marginTop = '20px'
+            header.style.marginBottom = `${nav.offsetHeight}px`
+        } else {
+            nav.style.width = '100%'
+            nav.style.position = 'static'
+            nav.style.transition = 'margin-top 0.3s ease'
+            header.style.marginBottom = '0'
+            nav.style.margin = '0'
+            nav.style.marginRight = '20px'
+        }
+    })
+
 
 })()

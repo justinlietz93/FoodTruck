@@ -37,7 +37,7 @@ nav ul li a:hover {
 
 /* Contact container */
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -63,7 +63,7 @@ nav ul li a:hover {
 .container form input[type="text"],
 .container form input[type="email"],
 .container form textarea {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -73,12 +73,14 @@ nav ul li a:hover {
 .container form button {
     background-color: #ff6600;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 30px;
     border: none;
     border-radius: 5px;
+    width: 93%;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .container form button:hover {
-    background-color: #e65c00;
+    background-color: #4091d7;
 }
